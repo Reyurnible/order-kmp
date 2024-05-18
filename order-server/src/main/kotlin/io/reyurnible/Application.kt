@@ -12,7 +12,7 @@ fun main() {
 
 fun Application.module() {
     configureSerialization()
-    configureDatabases()
     configureOpenApi()
+    // Create EndPoints
     configureRouting()
 }
