@@ -19,16 +19,27 @@ fun Application.configureDatabases() {
         // Create user
         post("/users") {
             val user = call.receive<ExposedUser>()
-            val id = userService.create(user)
+            val id = userService.create(ExposedUser(
+                name = "test",
+                age = 1,
+            ))
+            println(id)
             call.respond(HttpStatusCode.Created, id)
+        }
+
+        get("/users") {
+            val userList = userService.readAll()
+            call.respond(userList)
         }
         
             // Read user
         get("/users/{id}") {
             val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException("Invalid ID")
-            val user = userService.read(id)
+            val user = userService.readAll(id)
             if (user != null) {
+                // call.respond(user)
                 call.respond(HttpStatusCode.OK, user)
+                // call.respondText(user, contentType = ContentType.Application.Json, status = HttpStatusCode.OK)
             } else {
                 call.respond(HttpStatusCode.NotFound)
             }
@@ -39,7 +50,7 @@ fun Application.configureDatabases() {
             val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException("Invalid ID")
             val user = call.receive<ExposedUser>()
             userService.update(id, user)
-            call.respond(HttpStatusCode.OK)
+            call.respond(HttpStatusCode.OK, user)
         }
         
             // Delete user
