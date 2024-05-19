@@ -55,16 +55,16 @@ fun Route.usersApi(
 class ServerUserEndPoints(
     private val userRepository: UserRepository = UserRepositoryImpl(database)
 ) : UserEndPoints {
-    override suspend fun post(params: CreateUserParams): User {
-        return userRepository.create(params.name, params.age)
+    override suspend fun post(params: CreateUserParams): CommonUserResponse {
+        return userRepository.create(params.name, params.age).toResponse()
     }
 
-    override suspend fun getList(): List<User> {
-        return userRepository.getAll()
+    override suspend fun getList(): List<CommonUserResponse> {
+        return userRepository.getAll().map { it.toResponse() }
     }
 
-    override suspend fun get(id: String): User? {
-        return userRepository.get(UserId(id))
+    override suspend fun get(id: String): CommonUserResponse? {
+        return userRepository.get(UserId(id))?.toResponse()
     }
 
     override suspend  fun put(id: String, params: UpdateUserParams) {
@@ -76,3 +76,10 @@ class ServerUserEndPoints(
     }
 
 }
+
+private fun User.toResponse(): CommonUserResponse =
+    CommonUserResponse(
+        id = id.rawValue,
+        name = name,
+        age = age,
+    )
