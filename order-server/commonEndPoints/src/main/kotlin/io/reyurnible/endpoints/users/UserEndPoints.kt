@@ -1,6 +1,4 @@
-package io.reyurnible.routes.users
-
-import io.reyurnible.domain.model.User
+package io.reyurnible.endpoints.users
 
 interface UserEndPoints {
     suspend fun post(params: CreateUserParams): CommonUserResponse

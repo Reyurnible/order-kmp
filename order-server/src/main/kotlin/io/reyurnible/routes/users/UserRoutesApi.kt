@@ -9,6 +9,10 @@ import io.reyurnible.domain.UserRepository
 import io.reyurnible.domain.UserRepositoryImpl
 import io.reyurnible.domain.model.User
 import io.reyurnible.domain.model.UserId
+import io.reyurnible.endpoints.users.CommonUserResponse
+import io.reyurnible.endpoints.users.CreateUserParams
+import io.reyurnible.endpoints.users.UpdateUserParams
+import io.reyurnible.endpoints.users.UserEndPoints
 import io.reyurnible.infra.database.database
 
 fun Route.usersApi(

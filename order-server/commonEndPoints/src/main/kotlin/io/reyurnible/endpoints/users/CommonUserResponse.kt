@@ -1,9 +1,10 @@
-package io.reyurnible.routes.users
+package io.reyurnible.endpoints.users
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CreateUserParams(
+data class CommonUserResponse(
+    val id: String,
     val name: String,
     val age: Int,
 )

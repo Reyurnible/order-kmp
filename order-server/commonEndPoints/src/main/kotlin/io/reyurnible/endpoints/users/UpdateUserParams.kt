@@ -1,4 +1,4 @@
-package io.reyurnible.routes.users
+package io.reyurnible.endpoints.users
 
 import kotlinx.serialization.Serializable
 
