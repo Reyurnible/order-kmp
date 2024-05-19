@@ -1,9 +1,10 @@
-
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
 
 plugins {
+    // id("org.gradle.toolchains.foojay-resolver-convention") version "0.5.0"
+
     kotlin("jvm") version "1.9.24"
     id("io.ktor.plugin") version "2.3.11"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.24"
@@ -24,6 +25,7 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":commonEndPoints"))
     implementation("io.ktor:ktor-server-core-jvm")
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm")
     implementation("io.ktor:ktor-server-content-negotiation-jvm")
