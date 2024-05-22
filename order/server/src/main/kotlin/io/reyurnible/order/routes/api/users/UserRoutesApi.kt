@@ -1,4 +1,4 @@
-package io.reyurnible.order.routes.users
+package io.reyurnible.order.routes.api.users
 
 import io.ktor.http.*
 import io.ktor.server.application.*
