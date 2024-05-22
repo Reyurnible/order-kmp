@@ -46,18 +46,6 @@ kotlin {
     }
     
     sourceSets {
-        
-        androidMain.dependencies {
-            implementation(libs.compose.ui.tooling.preview)
-            implementation(libs.androidx.activity.compose)
-            implementation(libs.ktor.client.okhttp)
-        }
-        iosMain.dependencies {
-            implementation(libs.ktor.client.cio)
-        }
-        jsMain.dependencies {
-            implementation(libs.ktor.client.js)
-        }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -66,8 +54,32 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
+            implementation(libs.ktor.client.core)
+//            api("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+//            api("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+//            api("io.ktor:ktor-client-logging:$ktorVersion")
+//            api("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
+//            api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+
             implementation(projects.shared)
         }
+
+        androidMain.dependencies {
+            implementation(libs.compose.ui.tooling.preview)
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.ktor.client.okhttp)
+        }
+        iosMain.dependencies {
+            implementation(libs.ktor.client.cio)
+        }
+//        jsMain.dependencies {
+//            implementation(libs.ktor.client.js)
+//        }
+//        val wasmJsMain by getting {
+//            dependencies {
+//                implementation(libs.ktor.client.core)
+//            }
+//        }
     }
 }
 
