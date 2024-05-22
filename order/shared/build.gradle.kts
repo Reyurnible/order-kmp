@@ -7,10 +7,6 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
 }
 
-repositories {
-    mavenCentral()
-}
-
 kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
