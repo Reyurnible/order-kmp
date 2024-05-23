@@ -54,12 +54,13 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.kotlinx.coroutine.core)
+
             implementation(libs.ktor.client.core)
-//            api("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-//            api("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
-//            api("io.ktor:ktor-client-logging:$ktorVersion")
-//            api("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
-//            api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+            implementation(libs.ktor.client.content.negotiation)
+//            implementation(libs.ktor.client.logging)
+            implementation(libs.ktor.serialization.json)
 
             implementation(projects.shared)
         }
@@ -68,6 +69,7 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.kotlinx.coroutine.android)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.cio)
