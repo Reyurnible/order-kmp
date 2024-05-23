@@ -72,14 +72,9 @@ kotlin {
         iosMain.dependencies {
             implementation(libs.ktor.client.cio)
         }
-//        jsMain.dependencies {
-//            implementation(libs.ktor.client.js)
-//        }
-//        val wasmJsMain by getting {
-//            dependencies {
-//                implementation(libs.ktor.client.core)
-//            }
-//        }
+        jsMain.dependencies {
+            implementation(libs.ktor.client.js)
+        }
     }
 }
 
