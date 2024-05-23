@@ -8,3 +8,5 @@ actual fun httpClient(config: HttpClientConfig<*>.() -> Unit): HttpClient =
     HttpClient(CIO) {
         config(this)
     }
+
+actual val LOCAL_HOST_BASE_URL: String = "http://localhost:8080"

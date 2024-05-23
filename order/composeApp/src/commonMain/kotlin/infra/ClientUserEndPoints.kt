@@ -32,7 +32,7 @@ class ClientUserEndPoints(
     }
 ) : UserEndPoints {
     companion object {
-        private const val BASE_URL = "http://10.0.2.2:8080"
+        private val BASE_URL = LOCAL_HOST_BASE_URL
     }
     override suspend fun post(params: CreateUserParams): CommonUserResponse {
         val httpResponse = httpClient.post("$BASE_URL/users") {
