@@ -30,6 +30,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import io.reyurnible.order.ui.screens.SelectItemScreen
 import io.reyurnible.order.ui.screens.StartScreen
 import order.composeapp.generated.resources.Res
 import order.composeapp.generated.resources.common__back_button
@@ -66,30 +67,26 @@ fun OrderApp(
             startDestination = OrderScreens.Start.name,
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
                 .padding(innerPadding)
         ) {
+            // TODO : Navigationを後々ネストする
+            // https://developer.android.com/guide/navigation/design/nested-graphs?hl=ja
             composable(route = OrderScreens.Start.name) {
                 StartScreen(
                     onStartButtonClicked = {
                         navController.navigate(OrderScreens.SelectItem.name)
                     }
-//                    quantityOptions = DataSource.quantityOptions,
-//                    onNextButtonClicked = {
-//                        viewModel.setQuantity(it)
-//                        navController.navigate(OrderScreens.SelectItem.name)
-//                    },
-//                    modifier = Modifier
-//                        .fillMaxSize()
-//                        .padding(16.dp)
                 )
             }
             composable(route = OrderScreens.SelectItem.name) {
+                SelectItemScreen()
+            }
+            composable(route = OrderScreens.OrderConfirmation.name) {
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text("Select Item")
+                    Text("Confirm Order")
                 }
             }
         }
