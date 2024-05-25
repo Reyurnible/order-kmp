@@ -8,7 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import infra.ClientUserEndPoints
+import io.reyurnible.order.infra.ClientUserEndPoints
 import io.reyurnible.api.endpoints.users.CreateUserParams
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
