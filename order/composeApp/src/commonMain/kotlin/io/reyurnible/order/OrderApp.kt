@@ -1,14 +1,7 @@
 package io.reyurnible.order
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
@@ -19,10 +12,6 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -30,13 +19,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import io.reyurnible.order.ui.screens.OrderCompleteScreen
 import io.reyurnible.order.ui.screens.OrderConfirmationScreen
+import io.reyurnible.order.ui.screens.OrderHistoryScreen
 import io.reyurnible.order.ui.screens.SelectItemScreen
 import io.reyurnible.order.ui.screens.StartScreen
 import order.composeapp.generated.resources.Res
 import order.composeapp.generated.resources.common__back_button
-import order.composeapp.generated.resources.compose_multiplatform
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 
@@ -89,6 +78,20 @@ fun OrderApp(
             composable(route = OrderScreens.OrderConfirmation.name) {
                 OrderConfirmationScreen(
                     onOrderButtonClicked = {
+                        navController.navigate(OrderScreens.OrderComplete.name)
+                    }
+                )
+            }
+            composable(route = OrderScreens.OrderComplete.name) {
+                OrderCompleteScreen(
+                    onBackButtonClicked = {
+                        navController.navigate(OrderScreens.Start.name)
+                    }
+                )
+            }
+            composable(route = OrderScreens.OrderHistory.name) {
+                OrderHistoryScreen(
+                    onCheckoutButtonClicked = {
                         navController.navigate(OrderScreens.Start.name)
                     }
                 )
