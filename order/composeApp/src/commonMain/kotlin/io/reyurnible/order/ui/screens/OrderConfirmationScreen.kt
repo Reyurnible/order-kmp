@@ -15,9 +15,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,8 +27,8 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-fun SelectItemScreen(
-    onOrderConfirmButtonClicked: () -> Unit
+fun OrderConfirmationScreen(
+    onOrderButtonClicked: () -> Unit
 ) {
     Column {
         LazyColumn(
@@ -38,8 +36,14 @@ fun SelectItemScreen(
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
+            item {
+                Text("注文内容確認")
+                Spacer(modifier = Modifier.padding(8.dp))
+                Text("合計金額: 10000円")
+                Spacer(modifier = Modifier.padding(8.dp))
+            }
             items(10) { index ->
-                ItemRow(index)
+                OrderDetailRow(index)
             }
         }
         Box(
@@ -48,16 +52,16 @@ fun SelectItemScreen(
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(24.dp),
-                onClick = { onOrderConfirmButtonClicked() },
+                onClick = { onOrderButtonClicked() },
             ) {
-                Text("注文内容を確認する")
+                Text("注文する")
             }
         }
     }
 }
 
 @Composable
-fun ItemRow(
+fun OrderDetailRow(
     index: Int
 ) {
     Card(
@@ -75,19 +79,7 @@ fun ItemRow(
                 Text("商品名: Item $index")
                 Spacer(modifier = Modifier.padding(8.dp))
                 Text("価格: ${index * 1000}円")
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Button(onClick = { /*TODO*/ }) {
-                        Text("-")
-                    }
-                    Text("1", Modifier.padding(8.dp))
-                    Button(onClick = { /*TODO*/ }) {
-                        Text("+")
-                    }
-                    Spacer(modifier = Modifier.fillMaxWidth().weight(1f))
-                    Button(onClick = { /*TODO*/ }) {
-                        Text("カートに追加")
-                    }
-                }
+                Text("個数: 1個")
             }
         }
     }
@@ -95,6 +87,6 @@ fun ItemRow(
 
 @Composable
 @Preview
-fun ItemRowPreview() {
-    ItemRow(1)
+fun OrderDetailRowPreview() {
+    OrderDetailRow(1)
 }

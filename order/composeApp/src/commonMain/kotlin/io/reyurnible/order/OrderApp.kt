@@ -30,6 +30,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import io.reyurnible.order.ui.screens.OrderConfirmationScreen
 import io.reyurnible.order.ui.screens.SelectItemScreen
 import io.reyurnible.order.ui.screens.StartScreen
 import order.composeapp.generated.resources.Res
@@ -79,15 +80,18 @@ fun OrderApp(
                 )
             }
             composable(route = OrderScreens.SelectItem.name) {
-                SelectItemScreen()
+                SelectItemScreen(
+                    onOrderConfirmButtonClicked = {
+                        navController.navigate(OrderScreens.OrderConfirmation.name)
+                    }
+                )
             }
             composable(route = OrderScreens.OrderConfirmation.name) {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text("Confirm Order")
-                }
+                OrderConfirmationScreen(
+                    onOrderButtonClicked = {
+                        navController.navigate(OrderScreens.Start.name)
+                    }
+                )
             }
         }
     }
