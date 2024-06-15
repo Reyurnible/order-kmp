@@ -10,7 +10,6 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -19,6 +18,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import io.reyurnible.order.ui.routes.order.OrderViewModel
 import io.reyurnible.order.ui.screens.OrderCompleteScreen
 import io.reyurnible.order.ui.screens.OrderConfirmationScreen
 import io.reyurnible.order.ui.screens.OrderHistoryScreen
@@ -50,8 +50,6 @@ fun OrderApp(
             )
         }
     ) { innerPadding ->
-        val uiState by viewModel.uiState.collectAsState()
-
         NavHost(
             navController = navController,
             startDestination = OrderScreens.Start.name,
@@ -61,6 +59,8 @@ fun OrderApp(
         ) {
             // TODO : Navigationを後々ネストする
             // https://developer.android.com/guide/navigation/design/nested-graphs?hl=ja
+
+            // スタート画面
             composable(route = OrderScreens.Start.name) {
                 StartScreen(
                     onStartButtonClicked = {
@@ -68,6 +68,7 @@ fun OrderApp(
                     }
                 )
             }
+            // オーダー選択画面
             composable(route = OrderScreens.SelectItem.name) {
                 SelectItemScreen(
                     onOrderConfirmButtonClicked = {
@@ -98,7 +99,6 @@ fun OrderApp(
             }
         }
     }
-
 }
 
 @Composable
