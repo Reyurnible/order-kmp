@@ -24,18 +24,8 @@ fun OrderApp() {
         backStackEntry?.destination?.route ?: OrderAppDestination.Start.name
     )
 
-    Scaffold(
-        topBar = {
-            OrderAppBar(
-                currentScreen = currentScreen,
-                canNavigateBack = navController.previousBackStackEntry != null,
-                navigateUp = { navController.navigateUp() }
-            )
-        }
-    ) { innerPadding ->
-        OrderAppNavigation(
-            modifier = Modifier.fillMaxSize().padding(innerPadding),
-            navController = navController
-        )
-    }
+    OrderAppNavigation(
+        modifier = Modifier.fillMaxSize(),
+        navController = navController
+    )
 }

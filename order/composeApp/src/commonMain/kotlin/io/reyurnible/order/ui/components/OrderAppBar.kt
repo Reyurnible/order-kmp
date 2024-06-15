@@ -11,21 +11,22 @@ import androidx.compose.ui.Modifier
 import io.reyurnible.order.ui.OrderAppDestination
 import order.composeapp.generated.resources.Res
 import order.composeapp.generated.resources.common__back_button
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun OrderAppBar(
-    currentScreen: OrderAppDestination,
+    currentScreenName: StringResource?,
     canNavigateBack: Boolean,
-    navigateUp: () -> Unit,
+    navigateUp: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     TopAppBar(
-        title = { Text(stringResource(currentScreen.title)) },
-//        colors = TopAppBarDefaults.mediumTopAppBarColors(
-//            containerColor = MaterialTheme.colorScheme.primaryContainer
-//        ),
-        modifier = modifier,
+        title = {
+            currentScreenName?.let {
+                Text(stringResource(it))
+            }
+        },
         navigationIcon = {
             if (canNavigateBack) {
                 IconButton(onClick = navigateUp) {
@@ -35,6 +36,7 @@ fun OrderAppBar(
                     )
                 }
             }
-        }
+        },
+        modifier = modifier
     )
 }

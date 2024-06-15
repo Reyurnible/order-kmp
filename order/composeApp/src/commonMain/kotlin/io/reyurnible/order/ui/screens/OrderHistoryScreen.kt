@@ -16,13 +16,17 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Card
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import io.reyurnible.order.ui.components.OrderAppBar
 import order.composeapp.generated.resources.Res
 import order.composeapp.generated.resources.compose_multiplatform
+import order.composeapp.generated.resources.order_history__title
+import order.composeapp.generated.resources.select_item__title
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -30,31 +34,40 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun OrderHistoryScreen(
     onCheckoutButtonClicked: () -> Unit
 ) {
-    Column {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize().weight(1f),
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            item {
-                Text("注文履歴")
-                Spacer(modifier = Modifier.padding(8.dp))
-                Text("合計金額: 10000円")
-                Spacer(modifier = Modifier.padding(8.dp))
-            }
-            items(10) { index ->
-                OrderDetailRow(index)
-            }
+    Scaffold(
+        topBar = {
+            OrderAppBar(
+                currentScreenName = Res.string.order_history__title,
+                canNavigateBack = false,
+            )
         }
-        Box(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
-        ) {
-            Button(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(24.dp),
-                onClick = { onCheckoutButtonClicked() },
+    ) { innerPadding ->
+        Column(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize().weight(1f),
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                Text("お会計する")
+                item {
+                    Text("注文履歴")
+                    Spacer(modifier = Modifier.padding(8.dp))
+                    Text("合計金額: 10000円")
+                    Spacer(modifier = Modifier.padding(8.dp))
+                }
+                items(10) { index ->
+                    OrderDetailRow(index)
+                }
+            }
+            Box(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
+            ) {
+                Button(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(24.dp),
+                    onClick = { onCheckoutButtonClicked() },
+                ) {
+                    Text("お会計する")
+                }
             }
         }
     }

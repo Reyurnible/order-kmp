@@ -18,39 +18,51 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import io.reyurnible.order.ui.components.OrderAppBar
 import order.composeapp.generated.resources.Res
 import order.composeapp.generated.resources.compose_multiplatform
+import order.composeapp.generated.resources.select_item__title
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun SelectItemScreen(
-    onOrderConfirmButtonClicked: () -> Unit
+    onOrderConfirmButtonClicked: () -> Unit,
 ) {
-    Column {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize().weight(1f),
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            items(10) { index ->
-                ItemRow(index)
-            }
+    Scaffold(
+        topBar = {
+            OrderAppBar(
+                currentScreenName = Res.string.select_item__title,
+                canNavigateBack = false,
+            )
         }
-        Box(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
-        ) {
-            Button(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(24.dp),
-                onClick = { onOrderConfirmButtonClicked() },
+    ) { innerPadding ->
+        Column(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize().weight(1f),
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                Text("注文内容を確認する")
+                items(10) { index ->
+                    ItemRow(index)
+                }
+            }
+            Box(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
+            ) {
+                Button(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(24.dp),
+                    onClick = { onOrderConfirmButtonClicked() },
+                ) {
+                    Text("注文内容を確認する")
+                }
             }
         }
     }
