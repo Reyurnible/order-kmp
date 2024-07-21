@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Order</string>
+    <!-- Common Resources -->
+    <string name="common__back_button">Back</string>
+    <!-- Screen Resources -->
+    <string name="select_item__title">SelectItem</string>
+    <string name="order_confirmation__title">OrderConfirm</string>
+    <string name="order_complete__title">OrderComplete</string>
+    <string name="order_history__title">OrderHistory</string>
+</resources>

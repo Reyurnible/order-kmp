@@ -8,8 +8,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import infra.ClientUserEndPoints
+import io.reyurnible.order.infra.ClientUserEndPoints
 import io.reyurnible.api.endpoints.users.CreateUserParams
+import io.reyurnible.order.OrderApp
+import io.reyurnible.order.ui.theme.OrderAppTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,29 +28,7 @@ import order.composeapp.generated.resources.compose_multiplatform
 fun App() {
     val ioScope = rememberCoroutineScope { ioDispatcher }
 
-    MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Button(onClick = { showContent = !showContent }) {
-                // Call Ktor API in coroutine scope
-                ioScope.launch {
-                    runCatching {
-                        ClientUserEndPoints().post(
-                            CreateUserParams("name", 10))
-                    }.onSuccess {
-                        println("Success: $it")
-                    }.onFailure {
-                        println("Failure: $it")
-                    }
-                }
-                Text("Click me!")
-            }
-            AnimatedVisibility(showContent) {
-                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: greeting")
-                }
-            }
-        }
+    OrderAppTheme {
+        OrderApp()
     }
 }
