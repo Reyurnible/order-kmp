@@ -2,10 +2,13 @@ package io.reyurnible.order.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import io.reyurnible.order.ui.routes.start.StartRoute
+import io.reyurnible.order.ui.routes.start.StartViewModel
 import io.reyurnible.order.ui.screens.OrderCompleteScreen
 import io.reyurnible.order.ui.screens.OrderConfirmationScreen
 import io.reyurnible.order.ui.screens.OrderHistoryScreen
@@ -27,8 +30,10 @@ fun OrderAppNavigation(
 
         // スタート画面
         composable(route = OrderAppDestination.Start.name) {
-            StartScreen(
-                onStartButtonClicked = {
+            val viewModel: StartViewModel = viewModel { StartViewModel() }
+            StartRoute(
+                viewModel = viewModel,
+                onSubmitSuccess = {
                     navController.navigate(OrderAppDestination.SelectItem.name)
                 }
             )
