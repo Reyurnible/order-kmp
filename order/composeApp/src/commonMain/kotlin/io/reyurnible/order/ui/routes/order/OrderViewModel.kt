@@ -39,10 +39,18 @@ private sealed class OrderViewModelState(
         override val error: Throwable? = null
     ) : OrderViewModelState()
 
-    fun toUiState(): OrderUiState = OrderUiState.OrderConfirmation(
-        isLoading = isLoading,
-        error = error
-    )
+    fun toUiState(): OrderUiState =
+        when (this) {
+            is OrderConfirmation -> OrderUiState.OrderConfirmation(
+                isLoading = isLoading,
+                error = error
+            )
+
+            is OrderComplete -> OrderUiState.OrderComplete(
+                isLoading = isLoading,
+                error = error
+            )
+        }
 }
 
 class OrderViewModel : ViewModel() {
