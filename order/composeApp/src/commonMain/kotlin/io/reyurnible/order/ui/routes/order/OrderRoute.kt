@@ -8,6 +8,7 @@ import io.reyurnible.order.ui.screens.OrderConfirmationScreen
 @Composable
 fun OrderRoute(
     orderViewModel: OrderViewModel,
+    onOrderCompletedBack: () -> Unit,
 ) {
     val uiState = orderViewModel.uiState.collectAsStateWithLifecycle()
 
@@ -16,6 +17,7 @@ fun OrderRoute(
             OrderConfirmationScreen(
                 onOrderButtonClicked = {
                     // TODO Implement
+                    orderViewModel.onOrderButtonClicked()
                 }
             )
         }
@@ -23,6 +25,7 @@ fun OrderRoute(
             OrderCompleteScreen(
                 onBackButtonClicked = {
                     // TODO Implement
+                    onOrderCompletedBack()
                 }
             )
         }

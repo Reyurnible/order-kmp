@@ -25,10 +25,20 @@ sealed interface OrderUiState {
 }
 
 // Inner state
-private data class OrderViewModelState(
-    val isLoading: Boolean = false,
-    val error: Throwable? = null,
+private sealed class OrderViewModelState(
+    open val isLoading: Boolean = false,
+    open val error: Throwable? = null,
 ) {
+    data class OrderConfirmation(
+        override val isLoading: Boolean = false,
+        override val error: Throwable? = null
+    ) : OrderViewModelState()
+
+    data class OrderComplete(
+        override val isLoading: Boolean = false,
+        override val error: Throwable? = null
+    ) : OrderViewModelState()
+
     fun toUiState(): OrderUiState = OrderUiState.OrderConfirmation(
         isLoading = isLoading,
         error = error
@@ -36,7 +46,9 @@ private data class OrderViewModelState(
 }
 
 class OrderViewModel : ViewModel() {
-    private val viewModelState = MutableStateFlow(OrderViewModelState())
+    private val viewModelState: MutableStateFlow<OrderViewModelState> =
+        MutableStateFlow(OrderViewModelState.OrderConfirmation())
+
     val uiState: StateFlow<OrderUiState> =
         viewModelState
             .map { it.toUiState() }
@@ -45,5 +57,9 @@ class OrderViewModel : ViewModel() {
                 SharingStarted.Eagerly,
                 viewModelState.value.toUiState()
             )
+
+    fun onOrderButtonClicked() {
+        viewModelState.value = OrderViewModelState.OrderComplete()
+    }
 
 }

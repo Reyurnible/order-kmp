@@ -9,6 +9,7 @@ import io.reyurnible.order.ui.screens.SelectItemScreen
 @Composable
 fun SelectItemRoute(
     orderViewModel: SelectItemViewModel,
+    onOrderConfirmButtonClicked: () -> Unit,
 ) {
     val uiState = orderViewModel.uiState.collectAsStateWithLifecycle()
 
@@ -16,7 +17,7 @@ fun SelectItemRoute(
         is SelectItemUiState.SelectItem -> {
             SelectItemScreen(
                 onOrderConfirmButtonClicked = {
-                    // TODO Implement
+                    onOrderConfirmButtonClicked()
                 }
             )
         }
