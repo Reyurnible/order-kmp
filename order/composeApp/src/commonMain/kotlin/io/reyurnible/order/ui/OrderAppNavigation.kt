@@ -7,6 +7,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import io.reyurnible.order.ui.routes.order.OrderRoute
+import io.reyurnible.order.ui.routes.order.OrderViewModel
+import io.reyurnible.order.ui.routes.select_item.SelectItemRoute
+import io.reyurnible.order.ui.routes.select_item.SelectItemViewModel
 import io.reyurnible.order.ui.routes.start.StartRoute
 import io.reyurnible.order.ui.routes.start.StartViewModel
 import io.reyurnible.order.ui.screens.OrderCompleteScreen
@@ -40,23 +44,20 @@ fun OrderAppNavigation(
         }
         // オーダー選択画面
         composable(route = OrderAppDestination.SelectItem.name) {
-            SelectItemScreen(
+            val viewModel: SelectItemViewModel = viewModel { SelectItemViewModel() }
+            SelectItemRoute(
+                viewModel,
                 onOrderConfirmButtonClicked = {
                     navController.navigate(OrderAppDestination.OrderConfirmation.name)
                 }
             )
         }
         composable(route = OrderAppDestination.OrderConfirmation.name) {
-            OrderConfirmationScreen(
-                onOrderButtonClicked = {
-                    navController.navigate(OrderAppDestination.OrderComplete.name)
-                }
-            )
-        }
-        composable(route = OrderAppDestination.OrderComplete.name) {
-            OrderCompleteScreen(
-                onBackButtonClicked = {
-                    navController.navigate(OrderAppDestination.Start.name)
+            val viewModel: OrderViewModel = viewModel { OrderViewModel() }
+            OrderRoute(
+                viewModel,
+                onOrderCompletedBack = {
+                    navController.navigate(OrderAppDestination.SelectItem.name)
                 }
             )
         }
