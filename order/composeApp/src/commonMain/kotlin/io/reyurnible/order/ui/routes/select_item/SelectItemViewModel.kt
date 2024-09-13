@@ -84,9 +84,13 @@ class SelectItemViewModel : ViewModel() {
     }
 
     fun onItemClickAddToCart(itemId: ItemId) {
+        val currentCount =
+            viewModelState.value.selectItemCountMap[itemId]
+                ?: SelectItemViewModelState.DEFAULT_ITEM_COUNT
         viewModelState.value = viewModelState.value.copy(
             selectItemCountMap = viewModelState.value.selectItemCountMap + (itemId to SelectItemViewModelState.DEFAULT_ITEM_COUNT)
         )
+        // TODO カートに追加のリクエストを送る
     }
 
 }
