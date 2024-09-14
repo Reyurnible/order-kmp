@@ -1,7 +1,6 @@
 package io.reyurnible.order.ui.routes.select_item
 
 import io.reyurnible.order.MainDispatcherRule
-import io.reyurnible.order.ui.screens.ItemId
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before

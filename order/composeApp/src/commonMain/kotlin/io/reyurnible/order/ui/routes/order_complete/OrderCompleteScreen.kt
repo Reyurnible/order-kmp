@@ -1,4 +1,4 @@
-package io.reyurnible.order.ui.screens
+package io.reyurnible.order.ui.routes.order_complete
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -7,33 +7,31 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import io.reyurnible.order.ui.OrderAppDestination
 import io.reyurnible.order.ui.components.OrderAppBar
 import order.composeapp.generated.resources.Res
-import order.composeapp.generated.resources.common__back_button
-import org.jetbrains.compose.resources.stringResource
+import order.composeapp.generated.resources.order_complete__title
 
 @Composable
-fun StartScreen(
-    onStartButtonClicked: () -> Unit,
+fun OrderCompleteScreen(
+    uiState: OrderCompleteUiState,
+    onBackButtonClicked: () -> Unit,
 ) {
-    Scaffold {
+    Scaffold(
+        topBar = {
+            OrderAppBar(
+                currentScreenName = Res.string.order_complete__title,
+                canNavigateBack = false,
+            )
+        }
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -43,14 +41,14 @@ fun StartScreen(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("ご来店ありがとうございます！")
+                Text("ご注文ありがとうございます！")
                 Spacer(modifier = Modifier.padding(24.dp))
                 Button(
                     modifier = Modifier.widthIn(max = 280.dp).fillMaxWidth(),
                     shape = RoundedCornerShape(24.dp),
-                    onClick = { onStartButtonClicked() },
+                    onClick = { onBackButtonClicked() },
                 ) {
-                    Text("Start")
+                    Text("注文画面に戻る")
                 }
             }
         }

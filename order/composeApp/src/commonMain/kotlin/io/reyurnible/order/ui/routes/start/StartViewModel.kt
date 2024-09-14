@@ -9,20 +9,12 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 
-// Visible screen state
-sealed interface StartUiState {
-    data class Start(
-        val isLoading: Boolean = false,
-        val error: Throwable? = null
-    ) : StartUiState
-}
-
 // Inner state
 private data class StartViewModelState(
     val isLoading: Boolean = false,
     val error: Throwable? = null,
 ) {
-    fun toUiState(): StartUiState = StartUiState.Start(
+    fun toUiState(): StartUiState = StartUiState(
         isLoading = isLoading,
         error = error
     )
@@ -43,5 +35,4 @@ class StartViewModel : ViewModel() {
         // TODO Repositoryの呼び出しを実装
         onSubmitSuccess()
     }
-
 }

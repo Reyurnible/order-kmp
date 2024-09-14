@@ -8,12 +8,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
-// Visible screen state
-data class OrderCompleteUiState(
-    val isLoading: Boolean = false,
-    val error: Throwable? = null
-)
-
 // Inner state
 private data class OrderCompleteViewModelState(
     val isLoading: Boolean = false,
@@ -38,5 +32,4 @@ class OrderCompleteViewModel : ViewModel() {
                 SharingStarted.Eagerly,
                 viewModelState.value.toUiState()
             )
-
 }

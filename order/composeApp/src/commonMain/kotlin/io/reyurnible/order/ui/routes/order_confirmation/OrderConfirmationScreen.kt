@@ -1,4 +1,4 @@
-package io.reyurnible.order.ui.screens
+package io.reyurnible.order.ui.routes.order_confirmation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -22,7 +22,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.reyurnible.order.ui.components.OrderAppBar
-import io.reyurnible.order.ui.routes.order_confirmation.OrderConfirmationUiState
 import order.composeapp.generated.resources.Res
 import order.composeapp.generated.resources.compose_multiplatform
 import order.composeapp.generated.resources.order_confirmation__title
