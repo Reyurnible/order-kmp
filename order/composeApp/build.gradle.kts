@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+
+    id("org.jetbrains.kotlinx.kover") version "0.8.0"
 }
 
 kotlin {
@@ -146,4 +148,16 @@ dependencies {
 //    androidTestImplementation(libs.compose.ui.test.junit4)
 //    debugImplementation(libs.compose.ui.test.manifest)
     testImplementation(libs.androidx.test.junit)
+}
+
+// Run ./gradlew koverHtmlReport to generate coverage report
+kover {
+    reports {
+        verify {
+            rule {
+                minBound(80)
+
+            }
+        }
+    }
 }
