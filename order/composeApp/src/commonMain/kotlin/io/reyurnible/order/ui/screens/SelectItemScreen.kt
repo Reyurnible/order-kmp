@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -25,15 +26,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.reyurnible.order.ui.components.OrderAppBar
+import io.reyurnible.order.ui.routes.select_item.SelectItemUiState
 import order.composeapp.generated.resources.Res
 import order.composeapp.generated.resources.compose_multiplatform
 import order.composeapp.generated.resources.select_item__title
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import kotlin.jvm.JvmInline
 
 @Composable
 fun SelectItemScreen(
+    uiState: SelectItemUiState,
     onOrderConfirmButtonClicked: () -> Unit,
+    onItemClickPlusItem: (ItemId) -> Unit = {},
+    onItemClickMinusItem: (ItemId) -> Unit = {},
+    onItemClickAddToCart: (ItemId) -> Unit = {},
 ) {
     Scaffold(
         topBar = {
@@ -49,8 +56,13 @@ fun SelectItemScreen(
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                items(10) { index ->
-                    ItemRow(index)
+                items(uiState.selectItem) { item ->
+                    ItemRow(
+                        item = item,
+                        onClickPlusItem = { onItemClickPlusItem(it) },
+                        onClickMinusItem = { onItemClickMinusItem(it) },
+                        onClickAddToCart = { onItemClickAddToCart(it) },
+                    )
                 }
             }
             Box(
@@ -68,9 +80,23 @@ fun SelectItemScreen(
     }
 }
 
+@JvmInline
+value class ItemId(val id: Int)
+
+data class SelectItem(
+    val id: ItemId,
+    val name: String,
+    val price: Int,
+    val imageUrl: String,
+    val currentItemCount: Int,
+)
+
 @Composable
 fun ItemRow(
-    index: Int
+    item: SelectItem,
+    onClickPlusItem: (ItemId) -> Unit = {},
+    onClickMinusItem: (ItemId) -> Unit = {},
+    onClickAddToCart: (ItemId) -> Unit = {},
 ) {
     Card(
         modifier = Modifier
@@ -84,19 +110,19 @@ fun ItemRow(
                 modifier = Modifier.size(64.dp, 64.dp),
             )
             Column(modifier = Modifier.wrapContentSize().padding(8.dp)) {
-                Text("商品名: Item $index")
+                Text("商品名: ${item.name}")
                 Spacer(modifier = Modifier.padding(8.dp))
-                Text("価格: ${index * 1000}円")
+                Text("価格: ${item.price}円")
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Button(onClick = { /*TODO*/ }) {
+                    Button(onClick = { onClickMinusItem.invoke(item.id) }) {
                         Text("-")
                     }
-                    Text("1", Modifier.padding(8.dp))
-                    Button(onClick = { /*TODO*/ }) {
+                    Text("${item.currentItemCount}", Modifier.padding(8.dp))
+                    Button(onClick = { onClickPlusItem.invoke(item.id) }) {
                         Text("+")
                     }
                     Spacer(modifier = Modifier.fillMaxWidth().weight(1f))
-                    Button(onClick = { /*TODO*/ }) {
+                    Button(onClick = { onClickAddToCart.invoke(item.id) }) {
                         Text("カートに追加")
                     }
                 }
@@ -108,5 +134,11 @@ fun ItemRow(
 @Composable
 @Preview
 fun ItemRowPreview() {
-    ItemRow(1)
+    ItemRow(SelectItem(
+        id = ItemId(1),
+        name = "商品名",
+        price = 1000,
+        imageUrl = "",
+        currentItemCount = 1
+    ))
 }

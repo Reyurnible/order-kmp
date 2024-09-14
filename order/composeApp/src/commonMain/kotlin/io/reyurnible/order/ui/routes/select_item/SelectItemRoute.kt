@@ -13,13 +13,19 @@ fun SelectItemRoute(
 ) {
     val uiState = orderViewModel.uiState.collectAsStateWithLifecycle()
 
-    when (val state = uiState.value) {
-        is SelectItemUiState.SelectItem -> {
-            SelectItemScreen(
-                onOrderConfirmButtonClicked = {
-                    onOrderConfirmButtonClicked()
-                }
-            )
-        }
-    }
+    SelectItemScreen(
+        uiState = uiState.value,
+        onOrderConfirmButtonClicked = {
+            onOrderConfirmButtonClicked()
+        },
+        onItemClickPlusItem = { itemId ->
+            orderViewModel.onItemClickPlusItem(itemId)
+        },
+        onItemClickMinusItem = { itemId ->
+            orderViewModel.onItemClickMinusItem(itemId)
+        },
+        onItemClickAddToCart = { itemId ->
+            orderViewModel.onItemClickAddToCart(itemId)
+        },
+    )
 }
