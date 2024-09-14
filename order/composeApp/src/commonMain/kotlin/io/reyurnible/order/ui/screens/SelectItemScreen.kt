@@ -47,6 +47,7 @@ fun SelectItemScreen(
             OrderAppBar(
                 currentScreenName = Res.string.select_item__title,
                 canNavigateBack = false,
+
             )
         }
     ) { innerPadding ->

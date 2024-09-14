@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.reyurnible.order.ui.components.OrderAppBar
+import io.reyurnible.order.ui.routes.order_history.OrderHistoryUiState
 import order.composeapp.generated.resources.Res
 import order.composeapp.generated.resources.compose_multiplatform
 import order.composeapp.generated.resources.order_history__title
@@ -32,6 +33,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun OrderHistoryScreen(
+    uiState: OrderHistoryUiState,
     onCheckoutButtonClicked: () -> Unit
 ) {
     Scaffold(

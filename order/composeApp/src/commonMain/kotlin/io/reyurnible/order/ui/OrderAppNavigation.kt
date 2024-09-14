@@ -11,11 +11,12 @@ import io.reyurnible.order.ui.routes.order_confirmation.OrderConfirmationRoute
 import io.reyurnible.order.ui.routes.order_confirmation.OrderConfirmationViewModel
 import io.reyurnible.order.ui.routes.order_complete.OrderCompleteRoute
 import io.reyurnible.order.ui.routes.order_complete.OrderCompleteViewModel
+import io.reyurnible.order.ui.routes.order_history.OrderHistoryRoute
+import io.reyurnible.order.ui.routes.order_history.OrderHistoryViewModel
 import io.reyurnible.order.ui.routes.select_item.SelectItemRoute
 import io.reyurnible.order.ui.routes.select_item.SelectItemViewModel
 import io.reyurnible.order.ui.routes.start.StartRoute
 import io.reyurnible.order.ui.routes.start.StartViewModel
-import io.reyurnible.order.ui.screens.OrderHistoryScreen
 
 @Composable
 fun OrderAppNavigation(
@@ -68,10 +69,11 @@ fun OrderAppNavigation(
                 }
             )
         }
-
         composable(route = OrderAppDestination.OrderHistory.name) {
-            OrderHistoryScreen(
-                onCheckoutButtonClicked = {
+            val viewModel: OrderHistoryViewModel = viewModel { OrderHistoryViewModel() }
+            OrderHistoryRoute(
+                viewModel,
+                onCheckoutComplete = {
                     navController.navigate(OrderAppDestination.Start.name)
                 }
             )
