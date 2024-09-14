@@ -86,8 +86,6 @@ kotlin {
             @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             implementation(compose.uiTest)
 
-            implementation(libs.kotlin.test.common)
-            implementation(libs.kotlin.test)
             implementation(libs.kotlin.test.junit)
             implementation(libs.kotlinx.coroutine.test)
         }
