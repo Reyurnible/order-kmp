@@ -17,12 +17,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.reyurnible.order.ui.components.OrderAppBar
+import io.reyurnible.order.ui.routes.order_complete.OrderCompleteUiState
 import order.composeapp.generated.resources.Res
 import order.composeapp.generated.resources.order_complete__title
 import order.composeapp.generated.resources.order_history__title
 
 @Composable
 fun OrderCompleteScreen(
+    uiState: OrderCompleteUiState,
     onBackButtonClicked: () -> Unit,
 ) {
     Scaffold(

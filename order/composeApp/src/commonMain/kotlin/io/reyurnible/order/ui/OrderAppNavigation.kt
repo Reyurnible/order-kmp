@@ -7,17 +7,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import io.reyurnible.order.ui.routes.order.OrderRoute
-import io.reyurnible.order.ui.routes.order.OrderViewModel
+import io.reyurnible.order.ui.routes.order_confirmation.OrderConfirmationRoute
+import io.reyurnible.order.ui.routes.order_confirmation.OrderConfirmationViewModel
+import io.reyurnible.order.ui.routes.order_complete.OrderCompleteRoute
+import io.reyurnible.order.ui.routes.order_complete.OrderCompleteViewModel
 import io.reyurnible.order.ui.routes.select_item.SelectItemRoute
 import io.reyurnible.order.ui.routes.select_item.SelectItemViewModel
 import io.reyurnible.order.ui.routes.start.StartRoute
 import io.reyurnible.order.ui.routes.start.StartViewModel
-import io.reyurnible.order.ui.screens.OrderCompleteScreen
-import io.reyurnible.order.ui.screens.OrderConfirmationScreen
 import io.reyurnible.order.ui.screens.OrderHistoryScreen
-import io.reyurnible.order.ui.screens.SelectItemScreen
-import io.reyurnible.order.ui.screens.StartScreen
 
 @Composable
 fun OrderAppNavigation(
@@ -53,14 +51,24 @@ fun OrderAppNavigation(
             )
         }
         composable(route = OrderAppDestination.OrderConfirmation.name) {
-            val viewModel: OrderViewModel = viewModel { OrderViewModel() }
-            OrderRoute(
+            val viewModel: OrderConfirmationViewModel = viewModel { OrderConfirmationViewModel() }
+            OrderConfirmationRoute(
+                viewModel,
+                onOrderCompleted = {
+                    navController.navigate(OrderAppDestination.OrderComplete.name)
+                }
+            )
+        }
+        composable(route = OrderAppDestination.OrderComplete.name) {
+            val viewModel: OrderCompleteViewModel = viewModel { OrderCompleteViewModel() }
+            OrderCompleteRoute(
                 viewModel,
                 onOrderCompletedBack = {
                     navController.navigate(OrderAppDestination.SelectItem.name)
                 }
             )
         }
+
         composable(route = OrderAppDestination.OrderHistory.name) {
             OrderHistoryScreen(
                 onCheckoutButtonClicked = {
