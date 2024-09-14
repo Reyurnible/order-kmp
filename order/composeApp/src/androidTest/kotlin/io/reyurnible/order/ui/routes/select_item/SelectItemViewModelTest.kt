@@ -11,6 +11,7 @@ import org.junit.runners.JUnit4
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
+// Fixme Run on commonTest
 @RunWith(JUnit4::class)
 class SelectItemViewModelTest {
     @OptIn(ExperimentalCoroutinesApi::class)
