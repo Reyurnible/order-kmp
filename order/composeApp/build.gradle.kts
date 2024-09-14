@@ -1,4 +1,5 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
@@ -6,6 +7,8 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+
+    id("org.jetbrains.kotlinx.kover") version "0.8.0"
 }
 
 kotlin {
@@ -25,15 +28,18 @@ kotlin {
         }
         binaries.executable()
     }
-    
+
     androidTarget {
         compilations.all {
             kotlinOptions {
                 jvmTarget = "11"
             }
         }
+
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        instrumentedTestVariant.sourceSetTree.set(KotlinSourceSetTree.test)
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -44,7 +50,7 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
         all {
             languageSettings {
@@ -75,7 +81,16 @@ kotlin {
 
             implementation(projects.shared)
         }
+        commonTest.dependencies {
+            // Compose UI Testing
+            // https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-test.html#writing-and-running-tests-with-compose-multiplatform
+            implementation(kotlin("test"))
+            @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+            implementation(compose.uiTest)
 
+            implementation(libs.kotlin.test.junit)
+            implementation(libs.kotlinx.coroutine.test)
+        }
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
@@ -105,6 +120,8 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     packaging {
         resources {
@@ -122,5 +139,25 @@ android {
     }
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
+    }
+}
+
+dependencies {
+    testImplementation(kotlin("test-junit"))
+    testImplementation(libs.junit)
+//    androidTestImplementation(libs.compose.ui.test.junit4)
+//    debugImplementation(libs.compose.ui.test.manifest)
+    testImplementation(libs.androidx.test.junit)
+}
+
+// Run ./gradlew koverHtmlReport to generate coverage report
+kover {
+    reports {
+        verify {
+            rule {
+                minBound(80)
+
+            }
+        }
     }
 }
