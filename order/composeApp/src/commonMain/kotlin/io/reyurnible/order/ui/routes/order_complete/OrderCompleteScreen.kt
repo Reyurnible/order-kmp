@@ -1,4 +1,4 @@
-package io.reyurnible.order.ui.screens
+package io.reyurnible.order.ui.routes.order_complete
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
@@ -19,10 +18,10 @@ import androidx.compose.ui.unit.dp
 import io.reyurnible.order.ui.components.OrderAppBar
 import order.composeapp.generated.resources.Res
 import order.composeapp.generated.resources.order_complete__title
-import order.composeapp.generated.resources.order_history__title
 
 @Composable
 fun OrderCompleteScreen(
+    uiState: OrderCompleteUiState,
     onBackButtonClicked: () -> Unit,
 ) {
     Scaffold(

@@ -2,20 +2,12 @@ package io.reyurnible.order.ui.routes.select_item
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.reyurnible.order.ui.screens.ItemId
-import io.reyurnible.order.ui.screens.SelectItem
+import io.reyurnible.order.domain.Item
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-
-// Visible screen state
-data class SelectItemUiState(
-    val isLoading: Boolean = false,
-    val error: Throwable? = null,
-    val selectItem: List<SelectItem>,
-)
 
 // Inner state
 private data class SelectItemViewModelState(
@@ -95,9 +87,3 @@ class SelectItemViewModel : ViewModel() {
 
 }
 
-data class Item(
-    val id: ItemId,
-    val name: String,
-    val price: Int,
-    val imageUrl: String,
-)

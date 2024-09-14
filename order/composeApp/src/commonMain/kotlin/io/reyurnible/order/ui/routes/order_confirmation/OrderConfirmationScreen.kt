@@ -1,4 +1,4 @@
-package io.reyurnible.order.ui.screens
+package io.reyurnible.order.ui.routes.order_confirmation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -19,25 +19,24 @@ import androidx.compose.material.Card
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.reyurnible.order.ui.components.OrderAppBar
 import order.composeapp.generated.resources.Res
 import order.composeapp.generated.resources.compose_multiplatform
-import order.composeapp.generated.resources.order_history__title
-import order.composeapp.generated.resources.select_item__title
+import order.composeapp.generated.resources.order_confirmation__title
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-fun OrderHistoryScreen(
-    onCheckoutButtonClicked: () -> Unit
+fun OrderConfirmationScreen(
+    uiState: OrderConfirmationUiState,
+    onOrderButtonClicked: () -> Unit
 ) {
     Scaffold(
         topBar = {
             OrderAppBar(
-                currentScreenName = Res.string.order_history__title,
+                currentScreenName = Res.string.order_confirmation__title,
                 canNavigateBack = false,
             )
         }
@@ -49,7 +48,7 @@ fun OrderHistoryScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 item {
-                    Text("注文履歴")
+                    Text("注文内容確認")
                     Spacer(modifier = Modifier.padding(8.dp))
                     Text("合計金額: 10000円")
                     Spacer(modifier = Modifier.padding(8.dp))
@@ -64,9 +63,9 @@ fun OrderHistoryScreen(
                 Button(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(24.dp),
-                    onClick = { onCheckoutButtonClicked() },
+                    onClick = { onOrderButtonClicked() },
                 ) {
-                    Text("お会計する")
+                    Text("注文する")
                 }
             }
         }
@@ -74,7 +73,7 @@ fun OrderHistoryScreen(
 }
 
 @Composable
-fun OrderHistoryRow(
+fun OrderDetailRow(
     index: Int
 ) {
     Card(
@@ -100,6 +99,6 @@ fun OrderHistoryRow(
 
 @Composable
 @Preview
-fun OrderHistoryRowPreview() {
-    OrderHistoryRow(1)
+fun OrderDetailRowPreview() {
+    OrderDetailRow(1)
 }

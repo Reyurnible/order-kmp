@@ -1,4 +1,4 @@
-package io.reyurnible.order.ui.routes.start
+package io.reyurnible.order.ui.routes.order_complete
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,22 +7,24 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 
 // Inner state
-private data class StartViewModelState(
+private data class OrderCompleteViewModelState(
     val isLoading: Boolean = false,
     val error: Throwable? = null,
 ) {
-    fun toUiState(): StartUiState = StartUiState(
-        isLoading = isLoading,
-        error = error
-    )
+    fun toUiState(): OrderCompleteUiState =
+        OrderCompleteUiState(
+            isLoading = isLoading,
+            error = error
+        )
 }
 
-class StartViewModel : ViewModel() {
-    private val viewModelState = MutableStateFlow(StartViewModelState())
-    val uiState: StateFlow<StartUiState> =
+class OrderCompleteViewModel : ViewModel() {
+    private val viewModelState: MutableStateFlow<OrderCompleteViewModelState> =
+        MutableStateFlow(OrderCompleteViewModelState())
+
+    val uiState: StateFlow<OrderCompleteUiState> =
         viewModelState
             .map { it.toUiState() }
             .stateIn(
@@ -30,9 +32,4 @@ class StartViewModel : ViewModel() {
                 SharingStarted.Eagerly,
                 viewModelState.value.toUiState()
             )
-
-    fun onStartButtonClicked(onSubmitSuccess: () -> Unit) {
-        // TODO Repositoryの呼び出しを実装
-        onSubmitSuccess()
-    }
 }

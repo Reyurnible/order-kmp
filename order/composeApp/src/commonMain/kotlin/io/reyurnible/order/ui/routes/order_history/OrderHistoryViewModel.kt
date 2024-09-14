@@ -1,4 +1,4 @@
-package io.reyurnible.order.ui.routes.start
+package io.reyurnible.order.ui.routes.order_history
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,22 +7,24 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 
 // Inner state
-private data class StartViewModelState(
+private data class OrderHistoryViewModelState(
     val isLoading: Boolean = false,
     val error: Throwable? = null,
 ) {
-    fun toUiState(): StartUiState = StartUiState(
-        isLoading = isLoading,
-        error = error
-    )
+    fun toUiState(): OrderHistoryUiState =
+        OrderHistoryUiState(
+            isLoading = isLoading,
+            error = error
+        )
 }
 
-class StartViewModel : ViewModel() {
-    private val viewModelState = MutableStateFlow(StartViewModelState())
-    val uiState: StateFlow<StartUiState> =
+class OrderHistoryViewModel : ViewModel() {
+    private val viewModelState: MutableStateFlow<OrderHistoryViewModelState> =
+        MutableStateFlow(OrderHistoryViewModelState())
+
+    val uiState: StateFlow<OrderHistoryUiState> =
         viewModelState
             .map { it.toUiState() }
             .stateIn(
@@ -31,8 +33,8 @@ class StartViewModel : ViewModel() {
                 viewModelState.value.toUiState()
             )
 
-    fun onStartButtonClicked(onSubmitSuccess: () -> Unit) {
-        // TODO Repositoryの呼び出しを実装
-        onSubmitSuccess()
+    fun onOrderButtonClicked(onMoveToComplete: () -> Unit) {
+        onMoveToComplete.invoke()
     }
+
 }
