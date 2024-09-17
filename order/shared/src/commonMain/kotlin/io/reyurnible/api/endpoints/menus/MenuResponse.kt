@@ -20,6 +20,6 @@ data class MenuResponse(
     val description: String,
     val price: Int,
     val imageUrl: String?,
-    val calorie: String?,
+    val calorie: Int?,
     val allergy: String?,
 )
