@@ -1,4 +1,4 @@
-# Order Application Module
+# Order Customer Application
 
 ## Architecture
 
