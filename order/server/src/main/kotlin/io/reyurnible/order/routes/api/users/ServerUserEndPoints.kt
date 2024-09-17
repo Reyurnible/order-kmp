@@ -4,14 +4,12 @@ import io.reyurnible.api.endpoints.users.CommonUserResponse
 import io.reyurnible.api.endpoints.users.CreateUserParams
 import io.reyurnible.api.endpoints.users.UpdateUserParams
 import io.reyurnible.api.endpoints.users.UserEndPoints
-import io.reyurnible.order.domain.UserRepository
-import io.reyurnible.order.domain.UserRepositoryImpl
+import io.reyurnible.order.domain.repository.UserRepository
 import io.reyurnible.order.domain.model.User
 import io.reyurnible.order.domain.model.UserId
-import io.reyurnible.order.infra.database.database
 
 class ServerUserEndPoints(
-    private val userRepository: UserRepository = UserRepositoryImpl(database)
+    private val userRepository: UserRepository,
 ) : UserEndPoints {
     override suspend fun post(params: CreateUserParams): CommonUserResponse {
         return userRepository.create(params.name, params.age).toResponse()

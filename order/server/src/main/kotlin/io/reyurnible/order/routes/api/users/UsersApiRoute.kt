@@ -5,14 +5,14 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.reyurnible.order.domain.UserRepository
-import io.reyurnible.order.domain.UserRepositoryImpl
+import io.reyurnible.order.domain.repository.UserRepository
 import io.reyurnible.api.endpoints.users.CreateUserParams
 import io.reyurnible.api.endpoints.users.UpdateUserParams
 import io.reyurnible.order.infra.database.database
+import io.reyurnible.order.infra.database.repository.DatabaseUserRepository
 
 fun Route.usersApi(
-    userRepository: UserRepository = UserRepositoryImpl(database)
+    userRepository: UserRepository = DatabaseUserRepository(database)
 ) {
     val userEndPoint = ServerUserEndPoints(userRepository)
     // Create user
