@@ -5,6 +5,8 @@ import io.reyurnible.order.routes.api.menus.menusApi
 import io.reyurnible.order.routes.api.users.usersApi
 
 fun Route.api() {
-    usersApi()
-    menusApi()
+    route("/api") {
+        usersApi()
+        menusApi()
+    }
 }
