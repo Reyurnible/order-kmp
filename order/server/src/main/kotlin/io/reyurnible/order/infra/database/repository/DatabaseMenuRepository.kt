@@ -96,23 +96,19 @@ class DatabaseMenuRepository(private val database: Database) : MenuRepository {
         imageUrl: String,
         calorie: Int,
         allergy: String
-    ) {
-        dbQuery {
-            MenusTable.update({ MenusTable.id eq UUID.fromString(id.rawValue) }) {
-                it[MenusTable.name] = name
-                it[MenusTable.description] = description
-                it[MenusTable.price] = price
-                it[MenusTable.imageUrl] = imageUrl
-                it[MenusTable.calorie] = calorie
-                it[MenusTable.allergy] = allergy
-            }
+    ): Unit = dbQuery {
+        MenusTable.update({ MenusTable.id eq UUID.fromString(id.rawValue) }) {
+            it[MenusTable.name] = name
+            it[MenusTable.description] = description
+            it[MenusTable.price] = price
+            it[MenusTable.imageUrl] = imageUrl
+            it[MenusTable.calorie] = calorie
+            it[MenusTable.allergy] = allergy
         }
     }
 
-    override suspend fun delete(id: MenuId) {
-        dbQuery {
-            MenusTable.deleteWhere { MenusTable.id eq UUID.fromString(id.rawValue) }
-        }
+    override suspend fun delete(id: MenuId): Unit = dbQuery {
+        MenusTable.deleteWhere { MenusTable.id eq UUID.fromString(id.rawValue) }
     }
 
 }
