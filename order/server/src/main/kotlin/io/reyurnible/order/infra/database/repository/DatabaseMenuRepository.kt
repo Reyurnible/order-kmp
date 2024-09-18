@@ -3,7 +3,7 @@ package io.reyurnible.order.infra.database.repository
 import io.reyurnible.order.domain.repository.MenuRepository
 import io.reyurnible.order.domain.model.Menu
 import io.reyurnible.order.domain.model.MenuId
-import io.reyurnible.order.infra.database.table.MenuTable
+import io.reyurnible.order.infra.database.table.MenusTable
 import io.reyurnible.order.infra.database.table.UsersTable
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Database
@@ -21,7 +21,7 @@ import java.util.UUID
 class DatabaseMenuRepository(private val database: Database) : MenuRepository {
     init {
         transaction(database) {
-            SchemaUtils.create(UsersTable)
+            SchemaUtils.create(MenusTable)
         }
     }
 
@@ -36,53 +36,53 @@ class DatabaseMenuRepository(private val database: Database) : MenuRepository {
         calorie: Int,
         allergy: String
     ): Menu = dbQuery {
-        MenuTable.insert {
+        MenusTable.insert {
             it[id] = UUID.randomUUID()
-            it[MenuTable.name] = name
-            it[MenuTable.description] = description
-            it[MenuTable.price] = price
-            it[MenuTable.imageUrl] = imageUrl
-            it[MenuTable.calorie] = calorie
-            it[MenuTable.allergy] = allergy
+            it[MenusTable.name] = name
+            it[MenusTable.description] = description
+            it[MenusTable.price] = price
+            it[MenusTable.imageUrl] = imageUrl
+            it[MenusTable.calorie] = calorie
+            it[MenusTable.allergy] = allergy
         }.let {
             Menu(
-                id = MenuId(it[MenuTable.id].toString()),
-                name = it[MenuTable.name],
-                description = it[MenuTable.description],
-                price = it[MenuTable.price],
-                imageUrl = it[MenuTable.imageUrl],
-                calorie = it[MenuTable.calorie],
-                allergy = it[MenuTable.allergy]
+                id = MenuId(it[MenusTable.id].toString()),
+                name = it[MenusTable.name],
+                description = it[MenusTable.description],
+                price = it[MenusTable.price],
+                imageUrl = it[MenusTable.imageUrl],
+                calorie = it[MenusTable.calorie],
+                allergy = it[MenusTable.allergy]
             )
         }
     }
 
     override suspend fun getAll(): List<Menu> = dbQuery {
-        MenuTable.selectAll().map {
+        MenusTable.selectAll().map {
             Menu(
-                id = MenuId(it[MenuTable.id].toString()),
-                name = it[MenuTable.name],
-                description = it[MenuTable.description],
-                price = it[MenuTable.price],
-                imageUrl = it[MenuTable.imageUrl],
-                calorie = it[MenuTable.calorie],
-                allergy = it[MenuTable.allergy]
+                id = MenuId(it[MenusTable.id].toString()),
+                name = it[MenusTable.name],
+                description = it[MenusTable.description],
+                price = it[MenusTable.price],
+                imageUrl = it[MenusTable.imageUrl],
+                calorie = it[MenusTable.calorie],
+                allergy = it[MenusTable.allergy]
             )
         }
     }
 
     override suspend fun get(id: MenuId): Menu? = dbQuery {
-        MenuTable
-            .select { MenuTable.id eq UUID.fromString(id.rawValue) }
+        MenusTable
+            .select { MenusTable.id eq UUID.fromString(id.rawValue) }
             .map {
                 Menu(
-                    id = MenuId(it[MenuTable.id].toString()),
-                    name = it[MenuTable.name],
-                    description = it[MenuTable.description],
-                    price = it[MenuTable.price],
-                    imageUrl = it[MenuTable.imageUrl],
-                    calorie = it[MenuTable.calorie],
-                    allergy = it[MenuTable.allergy]
+                    id = MenuId(it[MenusTable.id].toString()),
+                    name = it[MenusTable.name],
+                    description = it[MenusTable.description],
+                    price = it[MenusTable.price],
+                    imageUrl = it[MenusTable.imageUrl],
+                    calorie = it[MenusTable.calorie],
+                    allergy = it[MenusTable.allergy]
                 )
             }
             .singleOrNull()
@@ -98,20 +98,20 @@ class DatabaseMenuRepository(private val database: Database) : MenuRepository {
         allergy: String
     ) {
         dbQuery {
-            MenuTable.update({ MenuTable.id eq UUID.fromString(id.rawValue) }) {
-                it[MenuTable.name] = name
-                it[MenuTable.description] = description
-                it[MenuTable.price] = price
-                it[MenuTable.imageUrl] = imageUrl
-                it[MenuTable.calorie] = calorie
-                it[MenuTable.allergy] = allergy
+            MenusTable.update({ MenusTable.id eq UUID.fromString(id.rawValue) }) {
+                it[MenusTable.name] = name
+                it[MenusTable.description] = description
+                it[MenusTable.price] = price
+                it[MenusTable.imageUrl] = imageUrl
+                it[MenusTable.calorie] = calorie
+                it[MenusTable.allergy] = allergy
             }
         }
     }
 
     override suspend fun delete(id: MenuId) {
         dbQuery {
-            MenuTable.deleteWhere { MenuTable.id eq UUID.fromString(id.rawValue) }
+            MenusTable.deleteWhere { MenusTable.id eq UUID.fromString(id.rawValue) }
         }
     }
 

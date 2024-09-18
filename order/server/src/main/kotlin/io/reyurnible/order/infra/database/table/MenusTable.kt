@@ -2,7 +2,7 @@ package io.reyurnible.order.infra.database.table
 
 import org.jetbrains.exposed.sql.Table
 
-object MenuTable : Table("Menus") {
+object MenusTable : Table("Menus") {
     val id = uuid("id")
     val name = varchar("name", length = 50)
     val description = varchar("description", length = 2000)
