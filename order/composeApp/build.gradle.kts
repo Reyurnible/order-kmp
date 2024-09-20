@@ -79,6 +79,12 @@ kotlin {
 //            implementation(libs.ktor.client.logging)
             implementation(libs.ktor.serialization.json)
 
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+            // implementation(libs.koin.compose.viewmodel.navigation)
+
             implementation(projects.shared)
         }
         commonTest.dependencies {
@@ -90,6 +96,8 @@ kotlin {
 
             implementation(libs.kotlin.test.junit)
             implementation(libs.kotlinx.coroutine.test)
+
+            implementation(libs.koin.test)
         }
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
