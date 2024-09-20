@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import io.reyurnible.order.infra.ClientUserEndPoints
 import io.reyurnible.order.ui.routes.order_confirmation.OrderConfirmationRoute
 import io.reyurnible.order.ui.routes.order_confirmation.OrderConfirmationViewModel
 import io.reyurnible.order.ui.routes.order_complete.OrderCompleteRoute
@@ -17,6 +18,7 @@ import io.reyurnible.order.ui.routes.select_item.SelectItemRoute
 import io.reyurnible.order.ui.routes.select_item.SelectItemViewModel
 import io.reyurnible.order.ui.routes.start.StartRoute
 import io.reyurnible.order.ui.routes.start.StartViewModel
+import org.koin.compose.koinInject
 
 @Composable
 fun OrderAppNavigation(
@@ -33,7 +35,9 @@ fun OrderAppNavigation(
 
         // スタート画面
         composable(route = OrderAppDestination.Start.name) {
-            val viewModel: StartViewModel = viewModel { StartViewModel() }
+            val userEndPoints = koinInject<ClientUserEndPoints>()
+            val viewModel: StartViewModel = viewModel { StartViewModel(userEndPoints) }
+
             StartRoute(
                 viewModel = viewModel,
                 onSubmitSuccess = {

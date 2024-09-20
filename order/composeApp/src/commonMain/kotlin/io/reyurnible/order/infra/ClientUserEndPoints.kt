@@ -21,22 +21,10 @@ import kotlinx.serialization.json.Json
 
 class ClientUserEndPoints(
     // TODO : Add DI for HttpClient by Koin
-    private val httpClient: HttpClient = httpClient {
-        install(ContentNegotiation) {
-            json(
-                Json {
-                    prettyPrint = true
-                    isLenient = true
-                    ignoreUnknownKeys = true
-                    allowSpecialFloatingPointValues = true
-                    useArrayPolymorphism = false
-                },
-            )
-        }
-    }
+    private val httpClient: HttpClient
 ) : UserEndPoints {
     companion object {
-        private val BASE_URL = LOCAL_HOST_BASE_URL
+        private val BASE_URL = "$LOCAL_HOST_BASE_URL/api"
     }
 
     override suspend fun post(params: CreateUserParams): CommonUserResponse =
