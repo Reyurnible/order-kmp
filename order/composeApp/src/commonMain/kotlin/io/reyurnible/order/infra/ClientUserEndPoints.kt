@@ -20,8 +20,7 @@ import io.reyurnible.api.endpoints.users.UserEndPoints
 import kotlinx.serialization.json.Json
 
 class ClientUserEndPoints(
-    // TODO : Add DI for HttpClient by Koin
-    private val httpClient: HttpClient
+    private val httpClient: HttpClient,
 ) : UserEndPoints {
     companion object {
         private val BASE_URL = "$LOCAL_HOST_BASE_URL/api"
@@ -57,15 +56,5 @@ class ClientUserEndPoints(
         handlingRequest<Unit> {
             httpClient.delete("$BASE_URL/users/$id")
         }
-
-    private suspend inline fun <reified T> handlingRequest(request: () -> HttpResponse): T {
-        val response = request()
-        if (response.status.isSuccess()) {
-            return response.body<T>()
-        } else {
-            // Handling Error Response
-            throw Exception("Failed to create user")
-        }
-    }
 
 }
