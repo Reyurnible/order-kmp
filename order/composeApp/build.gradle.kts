@@ -97,6 +97,7 @@ kotlin {
             implementation(libs.kotlin.test.junit)
             implementation(libs.kotlinx.coroutine.test)
 
+            implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.test)
         }
         androidMain.dependencies {

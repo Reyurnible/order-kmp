@@ -1,4 +1,4 @@
-package io.reyurnible.order.ui.routes.select_item
+package io.reyurnible.order.ui.routes.select_menu
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -6,7 +6,7 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun SelectItemRoute(
-    orderViewModel: SelectItemViewModel = koinViewModel(),
+    orderViewModel: SelectMenuViewModel = koinViewModel(),
     onOrderConfirmButtonClicked: () -> Unit,
 ) {
     val uiState = orderViewModel.uiState.collectAsStateWithLifecycle()

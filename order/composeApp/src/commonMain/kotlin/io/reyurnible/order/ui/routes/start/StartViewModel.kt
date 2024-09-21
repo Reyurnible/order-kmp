@@ -2,6 +2,7 @@ package io.reyurnible.order.ui.routes.start
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import io.reyurnible.api.endpoints.users.UserEndPoints
 import io.reyurnible.order.infra.ClientUserEndPoints
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -22,7 +23,7 @@ private data class StartViewModelState(
 }
 
 class StartViewModel(
-    private val userEndPoints: ClientUserEndPoints,
+    private val userEndPoints: UserEndPoints,
 ) : ViewModel() {
     private val viewModelState = MutableStateFlow(StartViewModelState())
     val uiState: StateFlow<StartUiState> =

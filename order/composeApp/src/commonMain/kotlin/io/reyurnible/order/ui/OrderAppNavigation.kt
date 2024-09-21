@@ -9,7 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import io.reyurnible.order.ui.routes.order_confirmation.OrderConfirmationRoute
 import io.reyurnible.order.ui.routes.order_complete.OrderCompleteRoute
 import io.reyurnible.order.ui.routes.order_history.OrderHistoryRoute
-import io.reyurnible.order.ui.routes.select_item.SelectItemRoute
+import io.reyurnible.order.ui.routes.select_menu.SelectItemRoute
 import io.reyurnible.order.ui.routes.start.StartRoute
 
 @Composable

@@ -4,5 +4,6 @@ import org.koin.core.KoinApplication
 
 fun KoinApplication.koinConfiguration() {
     modules(endPointsModule)
+    modules(repositoryModule)
     modules(viewModelModule)
 }

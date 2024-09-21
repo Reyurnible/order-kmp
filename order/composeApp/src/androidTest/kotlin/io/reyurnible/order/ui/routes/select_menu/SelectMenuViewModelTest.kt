@@ -1,6 +1,10 @@
-package io.reyurnible.order.ui.routes.select_item
+package io.reyurnible.order.ui.routes.select_menu
 
 import io.reyurnible.order.MainDispatcherRule
+import io.reyurnible.order.domain.model.MenuId
+import io.reyurnible.order.domain.repository.MenuRepository
+import io.reyurnible.order.domain.repository.MenuRepositoryImpl
+import io.reyurnible.order.infra.ClientMockMenuEndpoints
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -12,22 +16,25 @@ import kotlin.test.assertEquals
 
 // Fixme Run on commonTest
 @RunWith(JUnit4::class)
-class SelectItemViewModelTest {
+class SelectMenuViewModelTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
-    private lateinit var viewModel: SelectItemViewModel
+    private lateinit var viewModel: SelectMenuViewModel
 
     @Before
     fun setUp() {
-        viewModel = SelectItemViewModel()
+        val repository: MenuRepository = MenuRepositoryImpl(
+            ClientMockMenuEndpoints()
+        )
+        viewModel = SelectMenuViewModel(repository)
     }
 
     @Test
     fun onItemClickPlusItem_increases_item_count() = runTest {
 
-        val itemId = ItemId(1)
+        val itemId = MenuId("demihamberg")
         viewModel.onItemClickPlusItem(itemId)
 
         val itemCount =
@@ -38,7 +45,7 @@ class SelectItemViewModelTest {
     @Test
     fun onItemClickMinusItem_decreases_item_count() = runTest {
 
-        val itemId = ItemId(1)
+        val itemId = MenuId("demihamberg")
         viewModel.onItemClickPlusItem(itemId)
         viewModel.onItemClickMinusItem(itemId)
 
@@ -50,7 +57,7 @@ class SelectItemViewModelTest {
     @Test
     fun onItemClickMinusItem_does_not_decrease_item_count_below_1() = runTest {
 
-        val itemId = ItemId(1)
+        val itemId = MenuId("ponzuhamberg")
         viewModel.onItemClickMinusItem(itemId)
 
         val itemCount =
@@ -61,7 +68,7 @@ class SelectItemViewModelTest {
     @Test
     fun onItemClickAddToCart_adds_item_to_cart() = runTest {
 
-        val itemId = ItemId(1)
+        val itemId = MenuId("ponzuhamberg")
         viewModel.onItemClickAddToCart(itemId)
 
         val itemCount =
