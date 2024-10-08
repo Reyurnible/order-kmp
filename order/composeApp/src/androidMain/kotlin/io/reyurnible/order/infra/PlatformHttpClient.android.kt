@@ -12,7 +12,7 @@ actual fun httpClient(config: HttpClientConfig<*>.() -> Unit): HttpClient =
         engine {
             config {
                 retryOnConnectionFailure(true)
-                connectTimeout(0, TimeUnit.SECONDS)
+                connectTimeout(30, TimeUnit.SECONDS)
             }
         }
     }

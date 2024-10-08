@@ -1,4 +1,4 @@
-package io.reyurnible.order.ui.routes.select_item
+package io.reyurnible.order.ui.routes.select_menu
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -22,22 +22,24 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
+import io.reyurnible.order.domain.model.MenuId
 import io.reyurnible.order.ui.components.OrderAppBar
 import order.composeapp.generated.resources.Res
 import order.composeapp.generated.resources.compose_multiplatform
 import order.composeapp.generated.resources.select_item__title
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import kotlin.jvm.JvmInline
 
 @Composable
 fun SelectItemScreen(
-    uiState: SelectItemUiState,
+    uiState: SelectMenuUiState,
     onOrderConfirmButtonClicked: () -> Unit,
-    onItemClickPlusItem: (ItemId) -> Unit = {},
-    onItemClickMinusItem: (ItemId) -> Unit = {},
-    onItemClickAddToCart: (ItemId) -> Unit = {},
+    onItemClickPlusItem: (MenuId) -> Unit = {},
+    onItemClickMinusItem: (MenuId) -> Unit = {},
+    onItemClickAddToCart: (MenuId) -> Unit = {},
 ) {
     Scaffold(
         topBar = {
@@ -78,23 +80,20 @@ fun SelectItemScreen(
     }
 }
 
-@JvmInline
-value class ItemId(val id: Int)
-
 data class SelectItem(
-    val id: ItemId,
+    val id: MenuId,
     val name: String,
     val price: Int,
-    val imageUrl: String,
+    val imageUrl: String?,
     val currentItemCount: Int,
 )
 
 @Composable
 fun ItemRow(
     item: SelectItem,
-    onClickPlusItem: (ItemId) -> Unit = {},
-    onClickMinusItem: (ItemId) -> Unit = {},
-    onClickAddToCart: (ItemId) -> Unit = {},
+    onClickPlusItem: (MenuId) -> Unit = {},
+    onClickMinusItem: (MenuId) -> Unit = {},
+    onClickAddToCart: (MenuId) -> Unit = {},
 ) {
     Card(
         modifier = Modifier
@@ -102,13 +101,19 @@ fun ItemRow(
             .wrapContentSize()
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
-            Image(
-                painter = painterResource(Res.drawable.compose_multiplatform),
+            AsyncImage(
+                model = item.imageUrl,
                 contentDescription = "商品画像",
-                modifier = Modifier.size(64.dp, 64.dp),
+                contentScale = ContentScale.Inside,
+                modifier = Modifier.size(64.dp, 64.dp)
             )
+//            Image(
+//                painter = painterResource(Res.drawable.compose_multiplatform),
+//                contentDescription = "商品画像",
+//                modifier = Modifier.size(64.dp, 64.dp),
+//            )
             Column(modifier = Modifier.wrapContentSize().padding(8.dp)) {
-                Text("商品名: ${item.name}")
+                Text(item.name)
                 Spacer(modifier = Modifier.padding(8.dp))
                 Text("価格: ${item.price}円")
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -134,7 +139,7 @@ fun ItemRow(
 fun ItemRowPreview() {
     ItemRow(
         SelectItem(
-        id = ItemId(1),
+        id = MenuId("menuId"),
         name = "商品名",
         price = 1000,
         imageUrl = "",

@@ -1,7 +1,8 @@
-package io.reyurnible.order.domain
+package io.reyurnible.order.infra.database.repository
 
 import io.reyurnible.order.domain.model.User
 import io.reyurnible.order.domain.model.UserId
+import io.reyurnible.order.domain.repository.UserRepository
 import io.reyurnible.order.infra.database.table.UsersTable
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
@@ -10,19 +11,7 @@ import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransacti
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
-interface UserRepository {
-    suspend fun create(name: String, age: Int): User
-
-    suspend fun getAll(): List<User>
-
-    suspend fun get(id: UserId): User?
-
-    suspend fun update(id: UserId, name: String, age: Int)
-
-    suspend fun delete(id: UserId)
-}
-
-class UserRepositoryImpl(private val database: Database) : UserRepository {
+class DatabaseUserRepository(private val database: Database) : UserRepository {
     init {
         transaction(database) {
             SchemaUtils.create(UsersTable)

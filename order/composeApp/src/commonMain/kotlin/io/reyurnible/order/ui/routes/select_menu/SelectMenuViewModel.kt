@@ -1,37 +1,33 @@
-package io.reyurnible.order.ui.routes.select_item
+package io.reyurnible.order.ui.routes.select_menu
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.reyurnible.order.domain.Item
+import io.reyurnible.order.domain.model.Menu
+import io.reyurnible.order.domain.model.MenuId
+import io.reyurnible.order.domain.repository.MenuRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 // Inner state
-private data class SelectItemViewModelState(
+private data class SelectMenuViewModelState(
     val isLoading: Boolean = false,
     val error: Throwable? = null,
-    val itemList: List<Item> = (1..10).map { index ->
-        Item(
-            id = ItemId(index),
-            name = "商品名${index}",
-            price = 1000,
-            imageUrl = "",
-        )
-    },
-    val selectItemCountMap: Map<ItemId, Int> = emptyMap(),
+    val menuList: List<Menu> = emptyList(),
+    val selectItemCountMap: Map<MenuId, Int> = emptyMap(),
     val selectItemCount: Int = 1,
 ) {
     companion object {
         const val DEFAULT_ITEM_COUNT = 1
     }
 
-    fun toUiState(): SelectItemUiState = SelectItemUiState(
+    fun toUiState(): SelectMenuUiState = SelectMenuUiState(
         isLoading = isLoading,
         error = error,
-        selectItem = itemList.map { item ->
+        selectItem = menuList.map { item ->
             SelectItem(
                 id = item.id,
                 name = item.name,
@@ -43,9 +39,11 @@ private data class SelectItemViewModelState(
     )
 }
 
-class SelectItemViewModel : ViewModel() {
-    private val viewModelState = MutableStateFlow(SelectItemViewModelState())
-    val uiState: StateFlow<SelectItemUiState> =
+class SelectMenuViewModel(
+    private val menuRepository: MenuRepository,
+) : ViewModel() {
+    private val viewModelState = MutableStateFlow(SelectMenuViewModelState())
+    val uiState: StateFlow<SelectMenuUiState> =
         viewModelState
             .map { it.toUiState() }
             .stateIn(
@@ -54,20 +52,32 @@ class SelectItemViewModel : ViewModel() {
                 viewModelState.value.toUiState()
             )
 
-    fun onItemClickPlusItem(itemId: ItemId) {
+    init {
+        viewModelScope.launch {
+            runCatching {
+                menuRepository.getList()
+            }.onSuccess {
+                viewModelState.value = viewModelState.value.copy(menuList = it)
+            }.onFailure {
+
+            }
+        }
+    }
+
+    fun onItemClickPlusItem(itemId: MenuId) {
         val currentCount =
             viewModelState.value.selectItemCountMap[itemId]
-                ?: SelectItemViewModelState.DEFAULT_ITEM_COUNT
+                ?: SelectMenuViewModelState.DEFAULT_ITEM_COUNT
         viewModelState.value = viewModelState.value.copy(
             selectItemCountMap = viewModelState.value.selectItemCountMap.plus(itemId to currentCount + 1)
         )
     }
 
-    fun onItemClickMinusItem(itemId: ItemId) {
+    fun onItemClickMinusItem(itemId: MenuId) {
         val currentCount =
             viewModelState.value.selectItemCountMap[itemId]
-                ?: SelectItemViewModelState.DEFAULT_ITEM_COUNT
-        if (currentCount <= SelectItemViewModelState.DEFAULT_ITEM_COUNT) {
+                ?: SelectMenuViewModelState.DEFAULT_ITEM_COUNT
+        if (currentCount <= SelectMenuViewModelState.DEFAULT_ITEM_COUNT) {
             return
         }
         viewModelState.value = viewModelState.value.copy(
@@ -75,12 +85,12 @@ class SelectItemViewModel : ViewModel() {
         )
     }
 
-    fun onItemClickAddToCart(itemId: ItemId) {
+    fun onItemClickAddToCart(itemId: MenuId) {
         val currentCount =
             viewModelState.value.selectItemCountMap[itemId]
-                ?: SelectItemViewModelState.DEFAULT_ITEM_COUNT
+                ?: SelectMenuViewModelState.DEFAULT_ITEM_COUNT
         viewModelState.value = viewModelState.value.copy(
-            selectItemCountMap = viewModelState.value.selectItemCountMap + (itemId to SelectItemViewModelState.DEFAULT_ITEM_COUNT)
+            selectItemCountMap = viewModelState.value.selectItemCountMap + (itemId to SelectMenuViewModelState.DEFAULT_ITEM_COUNT)
         )
         // TODO カートに追加のリクエストを送る
     }

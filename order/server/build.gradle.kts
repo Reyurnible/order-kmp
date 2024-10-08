@@ -24,4 +24,5 @@ dependencies {
     // Test
     testImplementation(libs.ktor.server.tests)
     testImplementation(libs.kotlin.test.junit)
+    testImplementation(libs.kotlinx.coroutine.test)
 }
