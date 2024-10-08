@@ -34,7 +34,7 @@ class ClientMockMenuEndpoints(
             name = "ハンバーグデミグラスソース",
             description = "のびやかに広がる豊かな自然で育った、でっかい道産牛を１００％使用したビーフハンバーグです。",
             price = 1599,
-            imageUrl = "https://www.skylark.co.jp/jonathan/menu/json/menu/61_28839.jpg",
+            imageUrl = "https://placehold.jp/150x150.png",
             calorie = 600,
             allergy = null,
         )

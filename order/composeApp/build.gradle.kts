@@ -79,6 +79,10 @@ kotlin {
 //            implementation(libs.ktor.client.logging)
             implementation(libs.ktor.serialization.json)
 
+            implementation(libs.coil)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor)
+
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
@@ -104,6 +108,7 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.okhttp)
+            //implementation(libs.ktor.client.android)
             implementation(libs.kotlinx.coroutine.android)
         }
         iosMain.dependencies {

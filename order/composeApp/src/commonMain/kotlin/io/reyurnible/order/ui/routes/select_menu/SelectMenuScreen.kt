@@ -22,7 +22,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import io.reyurnible.order.domain.model.MenuId
 import io.reyurnible.order.ui.components.OrderAppBar
 import order.composeapp.generated.resources.Res
@@ -99,11 +101,17 @@ fun ItemRow(
             .wrapContentSize()
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
-            Image(
-                painter = painterResource(Res.drawable.compose_multiplatform),
+            AsyncImage(
+                model = item.imageUrl,
                 contentDescription = "商品画像",
-                modifier = Modifier.size(64.dp, 64.dp),
+                contentScale = ContentScale.Inside,
+                modifier = Modifier.size(64.dp, 64.dp)
             )
+//            Image(
+//                painter = painterResource(Res.drawable.compose_multiplatform),
+//                contentDescription = "商品画像",
+//                modifier = Modifier.size(64.dp, 64.dp),
+//            )
             Column(modifier = Modifier.wrapContentSize().padding(8.dp)) {
                 Text(item.name)
                 Spacer(modifier = Modifier.padding(8.dp))
