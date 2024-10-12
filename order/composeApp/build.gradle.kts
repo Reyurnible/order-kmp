@@ -157,6 +157,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.ui.text.google.fonts)
     testImplementation(kotlin("test-junit"))
     testImplementation(libs.junit)
 //    androidTestImplementation(libs.compose.ui.test.junit4)
